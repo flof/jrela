@@ -5,6 +5,7 @@
  */
 package at.lingu.jrela.projection;
 
+import at.lingu.jrela.AstVisitor;
 import at.lingu.jrela.source.Source;
 
 /**
@@ -22,4 +23,6 @@ public abstract class Projection {
 	public static Projection allFromSource(Source source) {
 		return new AllFromSourceProjection(source);
 	}
+
+	public abstract void acceptVisitor(AstVisitor visitor);
 }

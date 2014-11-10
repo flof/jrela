@@ -5,15 +5,17 @@
  */
 package at.lingu.jrela.source;
 
+import at.lingu.jrela.SelectStatement;
+
 /**
  *
  * @author flo
  */
 public class AliasedSubselect extends Source {
 
-	private Subselect subselect;
+	private SelectStatement subselect;
 
-	public AliasedSubselect(Subselect subselect, String alias) {
+	public AliasedSubselect(SelectStatement subselect, String alias) {
 		this.subselect = subselect;
 		this.name = alias;
 	}

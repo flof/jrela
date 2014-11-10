@@ -5,6 +5,7 @@
  */
 package at.lingu.jrela.projection;
 
+import at.lingu.jrela.AstVisitor;
 import at.lingu.jrela.source.SourceColumn;
 
 /**
@@ -28,6 +29,19 @@ public class SourceColumnProjection extends Projection {
 	public SourceColumnProjection(SourceColumn sourceColumn, String alias) {
 		this.sourceColumn = sourceColumn;
 		this.alias = alias;
+	}
+
+	@Override
+	public void acceptVisitor(AstVisitor visitor) {
+		visitor.visit(this);
+	}
+
+	public SourceColumn getSourceColumn() {
+		return sourceColumn;
+	}
+
+	public String getAlias() {
+		return alias;
 	}
 
 }

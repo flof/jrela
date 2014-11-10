@@ -5,10 +5,17 @@
  */
 package at.lingu.jrela.projection;
 
+import at.lingu.jrela.AstVisitor;
+
 /**
  *
  * @author flo
  */
 public class AllProjection extends Projection {
+
+	@Override
+	public void acceptVisitor(AstVisitor visitor) {
+		visitor.visit(this);
+	}
 
 }

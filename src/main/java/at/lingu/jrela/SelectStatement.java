@@ -72,4 +72,11 @@ public class SelectStatement {
 		this.joinedSource.leftJoin(source, restriction);
 		return this;
 	}
+
+	public void acceptVisitor(AstVisitor visitor) {
+		visitor.visit(this);
+		for (Projection projection : projections) {
+			projection.acceptVisitor(visitor);
+		}
+	}
 }

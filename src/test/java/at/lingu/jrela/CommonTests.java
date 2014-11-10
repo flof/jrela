@@ -5,6 +5,8 @@
  */
 package at.lingu.jrela;
 
+import at.lingu.jrela.generator.SqlGenerator;
+import at.lingu.jrela.generator.SqlResult;
 import at.lingu.jrela.restriction.Restriction;
 import at.lingu.jrela.source.AliasedTable;
 import at.lingu.jrela.source.Table;
@@ -33,6 +35,8 @@ public class CommonTests {
 
 		activeUsers.project(a.column("city"));
 
-		System.out.println(activeUsers);
+		SqlGenerator generator = new SqlGenerator();
+		SqlResult result = generator.generate(activeUsers);
+		System.out.println(result.getSql());
 	}
 }
