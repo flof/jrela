@@ -1,0 +1,9 @@
+target/
+*.un~
+*.md~
+context.xml
+.classpath
+.project
+.settings
+tomcat*
+.DS_Store
