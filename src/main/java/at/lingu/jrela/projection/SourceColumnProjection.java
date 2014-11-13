@@ -5,10 +5,10 @@
  */
 package at.lingu.jrela.projection;
 
-import at.lingu.jrela.AstVisitor;
 import at.lingu.jrela.source.SourceColumn;
 
 /**
+ * Represents projection of a named column of a source.
  *
  * @author flo
  */
@@ -18,21 +18,28 @@ public class SourceColumnProjection extends Projection {
 
 	private String alias;
 
-	public SourceColumnProjection(SourceColumn sourceColumn) {
-		this(sourceColumn, getDefaultAlias(sourceColumn));
+	private boolean fullQualified;
+
+	public static SourceColumnProjection unqualified(SourceColumn sourceColumn) {
+		return new SourceColumnProjection(sourceColumn, null, false);
 	}
 
-	private static String getDefaultAlias(SourceColumn sourceColumn) {
-		return sourceColumn.getSource().getName() + "_" + sourceColumn.getColumn();
+	public static SourceColumnProjection withAlias(SourceColumn sourceColumn, String alias) {
+		return new SourceColumnProjection(sourceColumn, alias, false);
 	}
 
-	public SourceColumnProjection(SourceColumn sourceColumn, String alias) {
+	public static SourceColumnProjection fullQualified(SourceColumn sourceColumn) {
+		return new SourceColumnProjection(sourceColumn, null, true);
+	}
+
+	protected SourceColumnProjection(SourceColumn sourceColumn, String alias, boolean fullQualified) {
 		this.sourceColumn = sourceColumn;
 		this.alias = alias;
+		this.fullQualified = fullQualified;
 	}
 
 	@Override
-	public void acceptVisitor(AstVisitor visitor) {
+	public void acceptVisitor(ProjectionVisitor visitor) {
 		visitor.visit(this);
 	}
 
@@ -42,6 +49,10 @@ public class SourceColumnProjection extends Projection {
 
 	public String getAlias() {
 		return alias;
+	}
+
+	public boolean isFullQualified() {
+		return fullQualified;
 	}
 
 }

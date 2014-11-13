@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author flo
  */
-public class AndRestriction implements Restriction {
+public class AndRestriction extends Restriction {
 
 	private List<Restriction> restrictions = new ArrayList<>();
 
@@ -24,6 +24,15 @@ public class AndRestriction implements Restriction {
 	public AndRestriction add(Restriction... restrictions) {
 		this.restrictions.addAll(Arrays.asList(restrictions));
 		return this;
+	}
+
+	@Override
+	public void acceptVisitor(RestrictionVisitor visitor) {
+		visitor.visit(this);
+	}
+
+	public List<Restriction> getRestrictions() {
+		return restrictions;
 	}
 
 }

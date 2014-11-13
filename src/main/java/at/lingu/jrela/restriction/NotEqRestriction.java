@@ -11,7 +11,7 @@ import at.lingu.jrela.source.SourceColumn;
  *
  * @author flo
  */
-public class LtEqRestriction extends Restriction {
+public class NotEqRestriction extends Restriction {
 
 	private SourceColumn left;
 

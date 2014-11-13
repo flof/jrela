@@ -5,10 +5,10 @@
  */
 package at.lingu.jrela.projection;
 
-import at.lingu.jrela.AstVisitor;
 import at.lingu.jrela.source.Source;
 
 /**
+ * Represents table.* projection.
  *
  * @author flo
  */
@@ -21,7 +21,7 @@ public class AllFromSourceProjection extends Projection {
 	}
 
 	@Override
-	public void acceptVisitor(AstVisitor visitor) {
+	public void acceptVisitor(ProjectionVisitor visitor) {
 		visitor.visit(this);
 	}
 

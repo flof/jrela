@@ -5,7 +5,8 @@
  */
 package at.lingu.jrela.source;
 
-import at.lingu.jrela.restriction.EqValueRestriction;
+import at.lingu.jrela.projection.SourceColumnProjection;
+import at.lingu.jrela.restriction.EqRestriction;
 import at.lingu.jrela.restriction.Restriction;
 
 /**
@@ -24,7 +25,11 @@ public class SourceColumn {
 	}
 
 	public Restriction eq(Object value) {
-		return new EqValueRestriction(source, column, value);
+		return new EqRestriction(new Expression(this), new Expression(value));
+	}
+
+	public Restriction eq(SourceColumn sourceColumn) {
+		return new EqRestriction(new Expression(this), new Expression(sourceColumn));
 	}
 
 	public Source getSource() {
@@ -43,4 +48,15 @@ public class SourceColumn {
 		this.column = column;
 	}
 
+	public void acceptVisitor(SourceVisitor visitor) {
+		visitor.visit(this);
+	}
+
+	public SourceColumnProjection as(String alias) {
+		return SourceColumnProjection.withAlias(this, alias);
+	}
+
+	public SourceColumnProjection asFullQualifiedAlias() {
+		return SourceColumnProjection.fullQualified(this);
+	}
 }

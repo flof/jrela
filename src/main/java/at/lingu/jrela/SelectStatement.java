@@ -41,6 +41,10 @@ public class SelectStatement {
 		this.joinedSource = joinedSource;
 	}
 
+	public AndRestriction getRestriction() {
+		return restriction;
+	}
+
 	public SelectStatement project(Projection... projections) {
 		this.projections.addAll(Arrays.asList(projections));
 		return this;
@@ -48,7 +52,14 @@ public class SelectStatement {
 
 	public SelectStatement project(SourceColumn... sourceColumns) {
 		for (SourceColumn sourceColumn : sourceColumns) {
-			projections.add(new SourceColumnProjection(sourceColumn));
+			projections.add(SourceColumnProjection.unqualified(sourceColumn));
+		}
+		return this;
+	}
+
+	public SelectStatement projectFullQualified(SourceColumn... sourceColumns) {
+		for (SourceColumn sourceColumn : sourceColumns) {
+			projections.add(SourceColumnProjection.fullQualified(sourceColumn));
 		}
 		return this;
 	}
@@ -73,10 +84,4 @@ public class SelectStatement {
 		return this;
 	}
 
-	public void acceptVisitor(AstVisitor visitor) {
-		visitor.visit(this);
-		for (Projection projection : projections) {
-			projection.acceptVisitor(visitor);
-		}
-	}
 }

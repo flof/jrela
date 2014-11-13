@@ -11,9 +11,14 @@ import at.lingu.jrela.source.SourceColumn;
  *
  * @author flo
  */
-public class GqRestriction implements Restriction {
+public class GtRestriction extends Restriction {
 
 	private SourceColumn left;
 
 	private SourceColumn right;
+
+	@Override
+	public void acceptVisitor(RestrictionVisitor visitor) {
+		visitor.visit(this);
+	}
 }

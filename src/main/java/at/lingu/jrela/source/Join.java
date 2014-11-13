@@ -80,4 +80,7 @@ public class Join {
 		this.restriction = restriction;
 	}
 
+	void acceptVisitor(SourceVisitor visitor) {
+		visitor.visit(this);
+	}
 }

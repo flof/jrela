@@ -9,25 +9,27 @@ package at.lingu.jrela.source;
  *
  * @author flo
  */
-public class Table extends Source {
+public class TableAlias extends Source {
 
-	private String name;
+	private Table table;
 
-	public Table(String name) {
-		this.name = name;
+	private String alias;
+
+	public TableAlias(Table table, String alias) {
+		this.table = table;
+		this.alias = alias;
 	}
 
-	public TableAlias alias(String alias) {
-		return new TableAlias(this, alias);
+	public Table getTable() {
+		return table;
 	}
 
-	public String getName() {
-		return name;
+	public String getAlias() {
+		return alias;
 	}
 
 	@Override
 	public void acceptVisitor(SourceVisitor visitor) {
 		visitor.visit(this);
 	}
-
 }

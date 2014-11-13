@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.lingu.jrela.source;
+package at.lingu.jrela.projection;
 
 /**
  *
  * @author flo
  */
-public class AliasedTable extends Source {
+public interface ProjectionVisitor {
 
-	private Table table;
+	void visit(AllFromSourceProjection projection);
 
-	public AliasedTable(Table table, String alias) {
-		this.table = table;
-		this.name = alias;
-	}
+	void visit(AllProjection projection);
+
+	void visit(SourceColumnProjection projection);
 
 }

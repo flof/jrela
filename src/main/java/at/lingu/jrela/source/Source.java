@@ -13,13 +13,9 @@ import at.lingu.jrela.restriction.Restriction;
  *
  * @author flo
  */
-public class Source {
+public abstract class Source {
 
-	protected String name;
-
-	public String getName() {
-		return name;
-	}
+	public abstract void acceptVisitor(SourceVisitor visitor);
 
 	public SourceColumn column(String name) {
 		return new SourceColumn(this, name);
@@ -44,4 +40,5 @@ public class Source {
 	public SelectStatement project(SourceColumn... sourceColumns) {
 		return new SelectStatement().from(this).project(sourceColumns);
 	}
+
 }

@@ -5,11 +5,7 @@
  */
 package at.lingu.jrela.generator;
 
-import at.lingu.jrela.AstVisitor;
 import at.lingu.jrela.SelectStatement;
-import at.lingu.jrela.projection.AllFromSourceProjection;
-import at.lingu.jrela.projection.AllProjection;
-import at.lingu.jrela.projection.SourceColumnProjection;
 import at.lingu.jrela.util.Strings;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,44 +14,29 @@ import java.util.List;
  *
  * @author flo
  */
-public class SqlGenerator implements AstVisitor {
+public class SqlGenerator {
 
-	private List<String> intro = new ArrayList<>();
+	private ProjectionGenerator projectionGenerator = new ProjectionGenerator();
 
-	private List<String> projections = new ArrayList<>();
+	private SourceGenerator sourceGenerator = new SourceGenerator();
+
+	private RestrictionGenerator restrictionGenerator = new RestrictionGenerator();
 
 	private List<Object> params = new ArrayList<>();
 
 	public SqlResult generate(SelectStatement selectStatement) {
-		selectStatement.acceptVisitor(this);
+		projectionGenerator.generate(selectStatement.getProjections());
+		sourceGenerator.generate(selectStatement.getJoinedSource());
+		restrictionGenerator.generate(selectStatement.getRestriction());
 
 		List<String> parts = new ArrayList<>();
-		parts.add(Strings.join(intro, " "));
-		parts.add(Strings.join(projections, ", "));
+		parts.add("SELECT");
+		parts.add(projectionGenerator.getSql());
+		parts.add("FROM");
+		parts.add(sourceGenerator.getSql());
+		parts.add("WHERE");
+		parts.add(restrictionGenerator.getSql());
 
 		return new SqlResult(Strings.join(parts, " "), params.toArray());
-	}
-
-	@Override
-	public void visit(SelectStatement selectStatement) {
-		intro.add("SELECT");
-	}
-
-	@Override
-	public void visit(AllFromSourceProjection projection) {
-		projections.add(projection.getSource().getName() + ".*");
-	}
-
-	@Override
-	public void visit(AllProjection projection) {
-		projections.add("*");
-	}
-
-	@Override
-	public void visit(SourceColumnProjection projection) {
-		projections.add(
-				projection.getSourceColumn().getSource().getName()
-				+ "." + projection.getSourceColumn().getColumn()
-				+ " AS " + projection.getAlias());
 	}
 }

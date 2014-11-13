@@ -5,16 +5,15 @@
  */
 package at.lingu.jrela.projection;
 
-import at.lingu.jrela.AstVisitor;
-
 /**
+ * Represents star-projection.
  *
  * @author flo
  */
 public class AllProjection extends Projection {
 
 	@Override
-	public void acceptVisitor(AstVisitor visitor) {
+	public void acceptVisitor(ProjectionVisitor visitor) {
 		visitor.visit(this);
 	}
 

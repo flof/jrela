@@ -5,15 +5,32 @@
  */
 package at.lingu.jrela.restriction;
 
-import at.lingu.jrela.source.SourceColumn;
+import at.lingu.jrela.source.Expression;
 
 /**
  *
  * @author flo
  */
-public class EqRestriction implements Restriction {
+public class EqRestriction extends Restriction {
 
-	private SourceColumn left;
+	private Expression left;
+	private Expression right;
 
-	private SourceColumn right;
+	public EqRestriction(Expression left, Expression right) {
+		this.left = left;
+		this.right = right;
+	}
+
+	public Expression getLeft() {
+		return left;
+	}
+
+	public Expression getRight() {
+		return right;
+	}
+
+	@Override
+	public void acceptVisitor(RestrictionVisitor visitor) {
+		visitor.visit(this);
+	}
 }

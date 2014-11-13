@@ -32,13 +32,19 @@ public class JoinedSource {
 	}
 
 	public JoinedSource leftJoin(Source source, Restriction restriction) {
-		joins.add(
-				new Join(
-						this,
-						getLastSource(),
-						source,
-						Join.JoinType.LEFT_OUTER_JOIN,
-						restriction));
+		if (sourceToJoinMap.containsKey(source)) {
+			throw new IllegalArgumentException(
+					"Source already joined. Use an alias to join it again");
+		}
+
+		final Join join = new Join(
+				this,
+				getLastSource(),
+				source,
+				Join.JoinType.LEFT_OUTER_JOIN,
+				restriction);
+		joins.add(join);
+		sourceToJoinMap.put(source, join);
 		return this;
 	}
 
@@ -47,6 +53,18 @@ public class JoinedSource {
 			return root;
 		} else {
 			return joins.get(joins.size() - 1).getRight();
+		}
+	}
+
+	public Source getRoot() {
+		return root;
+	}
+
+	public void acceptVisitor(SourceVisitor visitor) {
+		visitor.visit(this);
+		root.acceptVisitor(visitor);
+		for (Join join : joins) {
+			join.acceptVisitor(visitor);
 		}
 	}
 }
