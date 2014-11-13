@@ -46,4 +46,6 @@ Here's an example. This code...
     LEFT OUTER JOIN addresses 
     ON users.id = addresses.user_id 
     WHERE users.role = ? 
-    OR (users.active = ? AND (u.email = ? OR u.suspension IS NULL))
+    OR (users.active = ? AND (u.email = ? OR u.email IS NULL))
+
+More information follows.
