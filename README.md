@@ -9,6 +9,7 @@ We believe SQL is good. The only problem with SQL is when you have to
 support multiple database systems. Because most of them support a slightly different
 dialect of SQL. And this is one of the key features of jrela. It abstracts away these
 small differences and provides a unified API for composing SQL queries.
+
 The other key feature of jrela is its composability. You can create whole queries
 with a single line of code. Or you can create individual parts of a query
 individually and compose them together in any way you like. This means you can
@@ -48,4 +49,5 @@ Here's an example. This code...
     WHERE users.role = ? 
     OR (users.active = ? AND (u.email = ? OR u.email IS NULL))
 
+Jrela was inspired by Arel (https://github.com/rails/arel) and SQLAlchemy (http://www.sqlalchemy.org/).
 More information follows.
