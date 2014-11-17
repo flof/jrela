@@ -75,7 +75,9 @@ public class SourceGenerator implements SourceVisitor {
 
 	@Override
 	public void visit(SubselectAlias subselectAlias) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		SqlGenerator generator = new SqlGenerator();	// TODO: Get real SqlGenerator
+		SqlResult sql = generator.generate(subselectAlias.getSubselect());
+		joins.add("(" + sql.getSql() + ") AS " + subselectAlias.getAlias());
 	}
 
 	@Override

@@ -141,7 +141,7 @@ public class RestrictionGenerator implements RestrictionVisitor, SourceVisitor {
 
 	@Override
 	public void visit(SubselectAlias subselectAlias) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		parts.add(subselectAlias.getAlias());
 	}
 
 	@Override
