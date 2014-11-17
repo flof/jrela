@@ -50,4 +50,17 @@ Here's an example. This code...
     OR (users.active = ? AND (u.email = ? OR u.email IS NULL))
 
 Jrela was inspired by Arel (https://github.com/rails/arel) and SQLAlchemy (http://www.sqlalchemy.org/).
-More information follows.
+More information follows. 
+
+What already works:
+
+ - Basic SQL Generation
+ - Projection
+ - Table aliases in joins and projections
+ - Left-joins
+ - Subselects in joins
+ - Some basic restrictions in from-clauses
+
+What's not implemented yet:
+
+ - Support for multiple database systems
