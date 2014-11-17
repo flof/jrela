@@ -58,6 +58,7 @@ What already works:
  - Projection
  - Table aliases in joins and projections
  - Left-joins
+ - Self-joins
  - Subselects in joins
  - Some basic restrictions in from-clauses
 
