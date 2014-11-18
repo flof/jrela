@@ -21,6 +21,18 @@ import org.junit.Test;
  */
 public class CommonTests {
 
+	public enum AdminFilter {
+
+		ONLY_ADMIN,
+		ANY
+	}
+
+	public enum ActiveUsersFilter {
+
+		ONLY_ACTIVE,
+		ANY
+	}
+
 	@Test
 	public void testSelect() {
 		Table userTable = new Table("users");
@@ -59,7 +71,9 @@ public class CommonTests {
 		Table users = new Table("users");
 
 		SubselectAlias preselection = new SubselectAlias(
-				getPreselectedUsers(),
+				getPreselectedUsers(
+						ActiveUsersFilter.ONLY_ACTIVE,
+						AdminFilter.ONLY_ADMIN),
 				"fu");
 
 		SelectStatement detailsQuery = users.project(
@@ -76,17 +90,22 @@ public class CommonTests {
 		System.out.println(result.getSql());	// TODO: Make real test of result
 	}
 
-	private SelectStatement getPreselectedUsers() {
-		Table userTable = new Table("users");
+	private SelectStatement getPreselectedUsers(
+			ActiveUsersFilter activeUsersFilter,
+			AdminFilter adminFilter) {
 
-		TableAlias u = userTable.alias("u");
-		Restriction isAdmin = u.column("role").eq("admin");
-		Restriction isActive = u.column("active").eq(true);
+		Table users = new Table("users");
 
-		SelectStatement filteredUsers = u.project(u.column("id"))
-				.where(isAdmin, isActive)
-				.from(u);
+		SelectStatement stmt = users.project(users.column("id")).from(users);
 
-		return filteredUsers;
+		if (adminFilter == AdminFilter.ONLY_ADMIN) {
+			stmt.where(users.column("role").eq("admin"));
+		}
+
+		if (activeUsersFilter == ActiveUsersFilter.ONLY_ACTIVE) {
+			stmt.where(users.column("active").eq(true));
+		}
+
+		return stmt;
 	}
 }
