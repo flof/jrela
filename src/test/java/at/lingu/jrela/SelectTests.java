@@ -17,7 +17,7 @@ public class SelectTests extends BaseSqlTests {
 	public void testSelectAllFields() {
 
 		Select select = new Select(users)
-				.project(Projection.all());
+				.project(Projection.ALL);
 
 		generateResult(select);
 
