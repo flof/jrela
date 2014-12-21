@@ -50,7 +50,7 @@ public class CommonTests {
 				u.column("suspension").eq(""),
 				u.column("suspension").eq(null));
 
-		SelectStatement activeUsers = u
+		Select activeUsers = new Select(u)
 				.leftJoin(a, u.column("id").eq(a.column("user_id")))
 				.whereAny(
 						isAdmin,
@@ -76,27 +76,28 @@ public class CommonTests {
 						AdminFilter.ONLY_ADMIN),
 				"fu");
 
-		SelectStatement detailsQuery = users.project(
-				users.column("id"),
-				users.column("first_name"),
-				users.column("last_name"))
-				.from(users)
+		Select detailsQuery = new Select(users)
 				.leftJoin(
 						preselection,
-						users.column("id").eq(preselection.column("id")));
+						users.column("id").eq(preselection.column("id")))
+				.project(
+						users.column("id"),
+						users.column("first_name"),
+						users.column("last_name"));
+
 		SqlGenerator generator = new SqlGenerator();
 		SqlResult result = generator.generate(detailsQuery);
 
 		System.out.println(result.getSql());	// TODO: Make real test of result
 	}
 
-	private SelectStatement getPreselectedUsers(
+	private Select getPreselectedUsers(
 			ActiveUsersFilter activeUsersFilter,
 			AdminFilter adminFilter) {
 
 		Table users = new Table("users");
 
-		SelectStatement stmt = users.project(users.column("id")).from(users);
+		Select stmt = new Select(users).project(users.column("id"));
 
 		if (adminFilter == AdminFilter.ONLY_ADMIN) {
 			stmt.where(users.column("role").eq("admin"));

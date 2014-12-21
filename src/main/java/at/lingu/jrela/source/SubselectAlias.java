@@ -5,7 +5,7 @@
  */
 package at.lingu.jrela.source;
 
-import at.lingu.jrela.SelectStatement;
+import at.lingu.jrela.Select;
 
 /**
  *
@@ -13,16 +13,16 @@ import at.lingu.jrela.SelectStatement;
  */
 public class SubselectAlias extends Source {
 
-	private SelectStatement subselect;
+	private Select subselect;
 
 	private String alias;
 
-	public SubselectAlias(SelectStatement subselect, String alias) {
+	public SubselectAlias(Select subselect, String alias) {
 		this.subselect = subselect;
 		this.alias = alias;
 	}
 
-	public SelectStatement getSubselect() {
+	public Select getSubselect() {
 		return subselect;
 	}
 

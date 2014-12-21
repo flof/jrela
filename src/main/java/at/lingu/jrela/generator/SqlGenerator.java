@@ -5,7 +5,7 @@
  */
 package at.lingu.jrela.generator;
 
-import at.lingu.jrela.SelectStatement;
+import at.lingu.jrela.Select;
 import at.lingu.jrela.util.Strings;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class SqlGenerator {
 
 	private List<Object> params = new ArrayList<>();
 
-	public SqlResult generate(SelectStatement selectStatement) {
+	public SqlResult generate(Select selectStatement) {
 		projectionGenerator.generate(selectStatement.getProjections());
 		sourceGenerator.generate(selectStatement.getJoinedSource());
 		restrictionGenerator.generate(selectStatement.getRestriction());

@@ -21,13 +21,20 @@ import java.util.List;
  *
  * @author flo
  */
-public class SelectStatement {
+public class Select {
 
 	private List<Projection> projections = new ArrayList<>();
 
 	private JoinedSource joinedSource;
 
 	private AndRestriction restriction = new AndRestriction();
+
+	public Select() {
+	}
+
+	public Select(Source source) {
+		this.joinedSource = new JoinedSource(source);
+	}
 
 	public List<Projection> getProjections() {
 		return projections;
@@ -45,41 +52,41 @@ public class SelectStatement {
 		return restriction;
 	}
 
-	public SelectStatement project(Projection... projections) {
+	public Select project(Projection... projections) {
 		this.projections.addAll(Arrays.asList(projections));
 		return this;
 	}
 
-	public SelectStatement project(SourceColumn... sourceColumns) {
+	public Select project(SourceColumn... sourceColumns) {
 		for (SourceColumn sourceColumn : sourceColumns) {
 			projections.add(SourceColumnProjection.unqualified(sourceColumn));
 		}
 		return this;
 	}
 
-	public SelectStatement projectFullQualified(SourceColumn... sourceColumns) {
+	public Select projectFullQualified(SourceColumn... sourceColumns) {
 		for (SourceColumn sourceColumn : sourceColumns) {
 			projections.add(SourceColumnProjection.fullQualified(sourceColumn));
 		}
 		return this;
 	}
 
-	public SelectStatement where(Restriction... restrictions) {
+	public Select where(Restriction... restrictions) {
 		this.restriction.add(restrictions);
 		return this;
 	}
 
-	public SelectStatement whereAny(Restriction... restrictions) {
+	public Select whereAny(Restriction... restrictions) {
 		this.restriction.add(new OrRestriction(restrictions));
 		return this;
 	}
 
-	public SelectStatement from(Source source) {
+	public Select from(Source source) {
 		this.joinedSource = new JoinedSource(source);
 		return this;
 	}
 
-	public SelectStatement leftJoin(Source source, Restriction restriction) {
+	public Select leftJoin(Source source, Restriction restriction) {
 		this.joinedSource.leftJoin(source, restriction);
 		return this;
 	}
