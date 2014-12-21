@@ -24,7 +24,7 @@ Here's an example. This code...
 		Restriction isAdmin = users.column("role").eq("admin");
 		Restriction isActive = users.column("active").eq(true);
 
-		Restriction hasNoEmail = or(
+		Restriction hasNoEmail = any(
 				users.column("email").eq(""),
 				users.column("email").eq(null));
 
@@ -34,7 +34,7 @@ Here's an example. This code...
 						users.column("id").eq(addresses.column("user_id")))
 				.whereAny(
 						isAdmin,
-						and(isActive, hasNoEmail))
+						all(isActive, hasNoEmail))
 				.project(
 						users.column("id"),
 						users.column("username"),
