@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package at.lingu.jrela.projection;
 
 import at.lingu.jrela.source.SourceColumn;
@@ -44,8 +39,8 @@ public class SourceColumnProjection extends Projection {
 	/**
 	 * Projects the source column with an generated alias of the form
 	 * source-alias + "_" + column-name. E.g. the column 'id' of the table
-	 * 'user' would get an alias 'user_id'. If the user table had an alias 'u'
-	 * the generated alias would be 'u_id'.
+	 * 'user' would get an alias 'user_id'. However if the user table had an
+	 * alias 'u' the generated alias would be 'u_id'.
 	 *
 	 * @param sourceColumn
 	 * @return
