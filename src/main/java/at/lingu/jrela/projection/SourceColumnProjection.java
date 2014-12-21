@@ -20,14 +20,36 @@ public class SourceColumnProjection extends Projection {
 
 	private boolean fullQualified;
 
+	/**
+	 * Projects the source column without alias.
+	 *
+	 * @param sourceColumn
+	 * @return
+	 */
 	public static SourceColumnProjection unqualified(SourceColumn sourceColumn) {
 		return new SourceColumnProjection(sourceColumn, null, false);
 	}
 
+	/**
+	 * Project the source column with given alias.
+	 *
+	 * @param sourceColumn
+	 * @param alias
+	 * @return
+	 */
 	public static SourceColumnProjection withAlias(SourceColumn sourceColumn, String alias) {
 		return new SourceColumnProjection(sourceColumn, alias, false);
 	}
 
+	/**
+	 * Projects the source column with an generated alias of the form
+	 * source-alias + "_" + column-name. E.g. the column 'id' of the table
+	 * 'user' would get an alias 'user_id'. If the user table had an alias 'u'
+	 * the generated alias would be 'u_id'.
+	 *
+	 * @param sourceColumn
+	 * @return
+	 */
 	public static SourceColumnProjection fullQualified(SourceColumn sourceColumn) {
 		return new SourceColumnProjection(sourceColumn, null, true);
 	}

@@ -8,8 +8,8 @@ package at.lingu.jrela;
 import at.lingu.jrela.generator.SqlGenerator;
 import at.lingu.jrela.generator.SqlResult;
 import at.lingu.jrela.restriction.Restriction;
-import static at.lingu.jrela.restriction.Restriction.and;
-import static at.lingu.jrela.restriction.Restriction.or;
+import static at.lingu.jrela.restriction.Restriction.all;
+import static at.lingu.jrela.restriction.Restriction.any;
 import at.lingu.jrela.source.SubselectAlias;
 import at.lingu.jrela.source.Table;
 import at.lingu.jrela.source.TableAlias;
@@ -46,7 +46,7 @@ public class CommonTests {
 
 		Restriction isActive = u.column("active").eq(true);
 
-		Restriction hasNoSuspension = or(
+		Restriction hasNoSuspension = any(
 				u.column("suspension").eq(""),
 				u.column("suspension").eq(null));
 
@@ -54,7 +54,7 @@ public class CommonTests {
 				.leftJoin(a, u.column("id").eq(a.column("user_id")))
 				.whereAny(
 						isAdmin,
-						and(isActive, hasNoSuspension))
+						all(isActive, hasNoSuspension))
 				.projectFullQualified(u.column("username"))
 				.project(u.column("id").as("userid"));
 
