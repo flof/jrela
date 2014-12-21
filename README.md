@@ -28,7 +28,7 @@ Here's an example. This code...
 				users.column("email").eq(""),
 				users.column("email").eq(null));
 
-		SelectStatement userList = users
+		Select userList = new Select(users)
 				.leftJoin(
 						addresses,
 						users.column("id").eq(addresses.column("user_id")))
