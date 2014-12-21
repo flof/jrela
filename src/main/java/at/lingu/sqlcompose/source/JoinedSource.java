@@ -62,4 +62,8 @@ public class JoinedSource {
 			join.acceptVisitor(visitor);
 		}
 	}
+
+	public int getSourceCount() {
+		return 1 + joins.size();
+	}
 }

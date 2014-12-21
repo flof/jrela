@@ -25,7 +25,13 @@ public class ProjectionGenerator implements ProjectionVisitor, SourceVisitor {
 
 	private List<String> parts = new ArrayList<>();
 
-	void generate(List<Projection> projections) {
+	private boolean singleSource;
+
+	void generate(
+			List<Projection> projections,
+			JoinedSource joinedSource) {
+
+		singleSource = joinedSource.getSourceCount() == 1;
 		int count = 0;
 		for (Projection projection : projections) {
 			if (count > 0) {
@@ -53,8 +59,10 @@ public class ProjectionGenerator implements ProjectionVisitor, SourceVisitor {
 
 	@Override
 	public void visit(SourceColumnProjection projection) {
-		projection.getSourceColumn().getSource().acceptVisitor(this);
-		parts.add(".");
+		if (!singleSource) {
+			projection.getSourceColumn().getSource().acceptVisitor(this);
+			parts.add(".");
+		}
 		parts.add(projection.getSourceColumn().getColumn());
 		if (projection.getAlias() != null) {
 			parts.add(" AS ");

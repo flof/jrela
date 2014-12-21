@@ -1,6 +1,5 @@
 package at.lingu.sqlcompose;
 
-import at.lingu.sqlcompose.Select;
 import at.lingu.sqlcompose.projection.Projection;
 import at.lingu.sqlcompose.source.Table;
 import org.junit.Test;
@@ -23,6 +22,20 @@ public class SelectTests extends BaseSqlTests {
 		generateResult(select);
 
 		assertSql("SELECT * FROM users");
+		assertNoParams();
+	}
+
+	@Test
+	public void testSelectFields() {
+		Select select = new Select(users)
+				.project(
+						users.column("id"),
+						users.column("last_name"),
+						users.column("first_name"));
+
+		generateResult(select);
+
+		assertSql("SELECT id, last_name, first_name FROM users");
 		assertNoParams();
 	}
 

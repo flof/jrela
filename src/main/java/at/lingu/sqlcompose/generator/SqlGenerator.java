@@ -20,7 +20,9 @@ public class SqlGenerator {
 	private List<Object> params = new ArrayList<>();
 
 	public SqlResult generate(Select selectStatement) {
-		projectionGenerator.generate(selectStatement.getProjections());
+		projectionGenerator.generate(
+				selectStatement.getProjections(),
+				selectStatement.getJoinedSource());
 		sourceGenerator.generate(selectStatement.getJoinedSource());
 		restrictionGenerator.generate(selectStatement.getRestriction());
 
