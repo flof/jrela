@@ -23,16 +23,17 @@ public class Strings {
 		return result.toString();
 	}
 
-	public static boolean isEqualIgnoringWhitespace(String expected, String actual) {
-		String[] expectedTokens = removeEmptyStringFromArray(expected.split("\\s"));
-		String[] actualTokens = removeEmptyStringFromArray(actual.split("\\s"));
+	public static boolean isEqualIgnoringWhitespace(String s1, String s2) {
+		String[] expectedTokens = getNonWhitespaceTokens(s1);
+		String[] actualTokens = getNonWhitespaceTokens(s2);
 		return Arrays.equals(expectedTokens, actualTokens);
 	}
 
-	private static String[] removeEmptyStringFromArray(String[] arr) {
+	private static String[] getNonWhitespaceTokens(String s) {
+		String[] tokens = s.split("\\s");
 		List<String> result = new ArrayList<>();
-		for (int i = 0; i < arr.length; i++) {
-			String arr1 = arr[i];
+		for (int i = 0; i < tokens.length; i++) {
+			String arr1 = tokens[i];
 			if (StringUtils.isNotBlank(arr1)) {
 				result.add(arr1);
 			}
