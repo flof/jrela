@@ -29,8 +29,11 @@ public class SqlGenerator {
 		parts.add(projectionGenerator.getSql());
 		parts.add("FROM");
 		parts.add(sourceGenerator.getSql());
-		parts.add("WHERE");
-		parts.add(restrictionGenerator.getSql());
+
+		if (!restrictionGenerator.isEmpty()) {
+			parts.add("WHERE");
+			parts.add(restrictionGenerator.getSql());
+		}
 
 		return new SqlResult(Strings.join(parts, " "), params.toArray());
 	}

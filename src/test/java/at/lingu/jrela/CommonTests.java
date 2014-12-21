@@ -11,6 +11,7 @@ import at.lingu.jrela.source.TableAlias;
 import org.junit.Test;
 
 /**
+ * Tests for select statements.
  *
  * @author flo
  */

@@ -38,6 +38,10 @@ public class RestrictionGenerator implements RestrictionVisitor, SourceVisitor {
 		return Strings.join(parts, "");
 	}
 
+	public boolean isEmpty() {
+		return parts.isEmpty();
+	}
+
 	@Override
 	public void visit(AndRestriction andRestriction) {
 		boolean mustClose = false;
