@@ -39,4 +39,18 @@ public class SelectTests extends BaseSqlTests {
 		assertNoParams();
 	}
 
+	@Test
+	public void testSelectFieldsWithAlias() {
+		Select select = new Select(users)
+				.project(
+						users.column("id").as("user_id"),
+						users.column("last_name").as("l_name"),
+						users.column("first_name").as("f_name"));
+
+		generateResult(select);
+
+		assertSql("SELECT id AS user_id, last_name AS l_name, "
+				+ "first_name AS f_name FROM users");
+		assertNoParams();
+	}
 }
